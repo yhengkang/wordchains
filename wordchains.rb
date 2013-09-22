@@ -17,6 +17,54 @@
 # Write a method, build_chain(visited_words, word). This should lookup word in visited_words to find the prior word. Then lookup the prior word. Then the word prior to that. Keep going back (collecting the prior words in an array) until you hit nil. That means you already collected the starting word, too.
 # Make sure to request a code review from your TA once you can find adjacent words.
 # Good luck!
+class TreeNode
+	attr_accessor :value, :parent, :children
+
+	def initialize(value)
+		@value = value
+		@parent = nil
+		@children = []
+	end
+
+	def add_child(value)
+		child = TreeNode.new(value)
+		child.parent = self
+		@children << child
+		child
+	end
+
+	def dfs(target)
+		if self.value == target
+			return self.value
+		else
+			self.children.each do |child|
+				child.dfs(target)
+			end
+		end
+		return nil
+	end
+
+	def bfs(target)
+		nodes = [self]
+		until nodes.empty?
+			node = nodes.shift
+			if node.value == target
+				return node
+			else
+				nodes += node.children
+			end
+		end
+		nil
+	end
+
+	def find_path
+		path = [@value]
+		return path if @parent.nil?
+		path += @parent.find_path
+	end
+
+
+end
 
 class WordChains
 	DICTIONARY = File.readlines("dictionary.txt").map(&:chomp)
