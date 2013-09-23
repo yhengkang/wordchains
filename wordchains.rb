@@ -73,7 +73,6 @@ class WordChains
 	def initialize(start_word)
 		@start_word = TreeNode.new(start_word)
 		@visited_nodes = [@start_word]
-		# @visited_words = [@start_word.value]
 		@same_length_words = []
 	end
 
@@ -94,8 +93,8 @@ class WordChains
 		# puts "does this work?"
 		visited_words = [@start_word.value]
 		until visited_words.include?(end_word)
-			print "."
 			@visited_nodes.each do |node|
+				print "."
 				@same_length_words.each do |same_length_word|
 					if one_letter_diff?(node.value, same_length_word) && !visited_words.include?(same_length_word)
 						visited_words << same_length_word
@@ -114,67 +113,9 @@ class WordChains
 	def run_command(end_word)
 		self.same_length
 		build_word_tree(end_word)
-		find_word_chain(end_word)
+		puts "\n\nThe chain is: #{find_word_chain(end_word).join(', ')}."
 	end
 
-#take each word in start_words
-#creates an similiar_words array of all words that are similar
-# #takes from similar_words array words not in new_words
-# 	def create_new_words(unvisited_words)
-# 		@start_words.each do |word|
-# 			similar_words = unvisited_words.select {|unvisited_word| one_letter_diff?(word, unvisited_word)}
-# 			@new_words += similar_words.select {|similar_word| !@new_words.include?(similar_word)}
-# 			return found_word if @new_words.include?(@end_word)
-# 		end
-# 		@visited_words += @new_words
-# 		@new_words
-# 	end
-			
-# 	def test_run
-# 		same_length #populates same_length_words
-# 		create_new_words(@same_length_words)
-# 	end
 
 end
 
-	# def build_word_tree(end_word)
-	# 	self.same_length
-	# 	until @visited_words.include?(end_word)
-	# 		@visited_nodes.each do |node|
-	# 			valid_words = []
-	# 			one_letter_diff(node.value, @same_length_words).each do |possible_word|
-	# 				valid_words << possible_word unless @visited_words.include?(possible_word)
-	# 				@visited_words += valid_words 	
-	# 				valid_words.each do |valid_word|
-	# 					node.add_child(valid_word)
-	# 				end
-	# 			end
-	# 		end	
-	# 	end
-	# 	@visited_nodes.last
-	# end
-
-
-	# def one_letter_diff?(word1, word2)
-	# 	different_letters = 0
-	# 	word1.split('').each_with_index do |letter, i|
-	# 		different_letters += 1 unless letter == word2[i]
-	# 	end
-	# 	if different_letters == 1
-	# 		true
-	# 	else
-	# 		false
-	# 	end
-	# end
-
-	# def one_letter_diff(word1, word_array)
-	# 	possible_words = []
-	# 	word_array.each do |word2|
-	# 		letter_difference = 0
-	# 		word1.length.times do |i|
-	# 			letter_difference += 1 if word1[i] != word2[i]
-	# 		end
-	# 		possible_words << word2 if letter_difference == 1
-	# 	end
-	# 	possible_words
-	# end
